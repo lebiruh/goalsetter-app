@@ -11,17 +11,17 @@ export const register = createAsyncThunk('auth/register', async (user, thunckAPI
     return thunckAPI.rejectWithValue(message);
   }
 })
-export const login = createAsyncThunk('auth/login', async (user, thunckAPI) => {
+export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
   try {
     return await authService.login(user);
   } catch (error) {
     const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-    return thunckAPI.rejectWithValue(message);
+    return thunkAPI.rejectWithValue(message);
   }
 })
 
 export const logout = createAsyncThunk('auth/logout', async () => {
-  await authService.logout();
+  return await authService.logout();
 })
 
 const initialState = {
@@ -76,7 +76,7 @@ export const authSlice = createSlice({
       state.user = null
     })
     .addCase(logout.fulfilled, (state) => {
-      state.user = null;
+      state.user = null
     })
   }
 })
